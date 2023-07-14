@@ -66,10 +66,12 @@
       console.log('Received:  %o', payload);
       document.getElementById("data").innerHTML = JSON.stringify(payload.data);
     });
+    document.getElementById("button").disabled = true;
     getToken(messaging, {
       vapidKey: vapidKey,
       serviceWorkerRegistration: registration
     }).then((current_token) => {
+    document.getElementById("button").disabled = false;
       if (current_token) {
         document.getElementById("token").innerHTML = "Token = " + current_token;
         console.log('current_token:  %o', current_token);
