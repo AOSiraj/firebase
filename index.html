@@ -1,8 +1,8 @@
 <html>
-<div id='token'></div><br/><br/>
-<label for="notification_data">Notification Data</label><br/>
-<input type="text" id="notification_data" name="notification_data" required size="100" value="test"/><br/>
-<button id='button' onclick="sendNotifcation()">Send Notifcation</button><br/><br/>
+<div id='token'></div><br /><br />
+<label for="notification_data">Notification Data</label><br />
+<input type="text" id="notification_data" name="notification_data" required size="100" value="test" /><br />
+<button id='button' onclick="sendNotifcation()">Send Notifcation</button><br /><br />
 <div>Received</div>
 <div id='data'></div>
 
@@ -45,7 +45,8 @@
       console.log('Notification permission granted.');
     }
   })
-
+  document.getElementById("button").disabled = true;
+  document.getElementById("token").innerHTML = "Registering Service Worker....";
   navigator.serviceWorker.register('firebase-messaging-sw.js').then((registration) => {
     const firebaseConfig = {
       apiKey: "AIzaSyCONMnWJgEN3t59yPKjbfJxdkobIhgnCO0",
@@ -66,12 +67,12 @@
       console.log('Received:  %o', payload);
       document.getElementById("data").innerHTML = JSON.stringify(payload.data);
     });
-    document.getElementById("button").disabled = true;
+    document.getElementById("token").innerHTML = "Fetching Token...";
     getToken(messaging, {
       vapidKey: vapidKey,
       serviceWorkerRegistration: registration
     }).then((current_token) => {
-    document.getElementById("button").disabled = false;
+      document.getElementById("button").disabled = false;
       if (current_token) {
         document.getElementById("token").innerHTML = "Token = " + current_token;
         console.log('current_token:  %o', current_token);
